@@ -1,9 +1,7 @@
-import threading
 import socket
 
-class Plugin(threading.Thread):
+class Plugin:
     def __init__(self, socketpath, config):
-        threading.Thread.__init__(self)
         self.socketpath = socketpath
         self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
         self.shutdown = False
@@ -15,3 +13,6 @@ class Plugin(threading.Thread):
 
     def run(self):
         raise NotImplementedError("Plugins must implement run()!")
+
+    def shutdown(self):
+        self.socket.close()

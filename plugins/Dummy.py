@@ -9,9 +9,6 @@ class Dummy(Plugin):
         Plugin.__init__(self, socketpath, config)
         self.message = config['message']
 
-    #TODO see if we can wrap this shutdown logic
     def run(self):
-        while not self.shutdown:
-            self.send(self.message)
-            time.sleep(1)
-        self.socket.close()
+        self.send(self.message)
+        time.sleep(1)
