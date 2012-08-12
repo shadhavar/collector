@@ -14,5 +14,5 @@ class Plugin:
     def run(self):
         raise NotImplementedError("Plugins must implement run()!")
 
-    def shutdown(self):
+    def stop(self):
         self.socket.close()

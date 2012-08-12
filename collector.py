@@ -46,7 +46,7 @@ if len(sys.argv) > 1:
     print "Starting plugin {0}".format(instance)
     while not m.shutdown:
        m.run()
-    m.shutdown()
+    m.stop()
 
 
 else:
