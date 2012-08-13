@@ -4,6 +4,12 @@ import socket
 import json
 import subprocess
 import signal
+# setproctitle is optional
+try:
+    import setproctitle
+except:
+    setproctitle = None
+
 
 def signal_main(signum, frame):
     print "Shutting down"
@@ -45,7 +51,6 @@ def run_plugin(instance):
        m.run()
     m.stop()
 
-
 # create a unix domain socket to be used as sink
 def initialize_socket():
     print "Preparing domain socket"
@@ -66,6 +71,8 @@ if __name__ == "__main__":
 
     # if passed an argument, we run that plugin instance
     if len(sys.argv) > 1:
+        if setproctitle:
+            setproctitle.setproctitle(sys.argv[1])
         run_plugin(sys.argv[1])
     else:
         sink, maxrecv = initialize_socket()
