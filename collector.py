@@ -50,13 +50,14 @@ def run_plugin(instance):
 def initialize_socket():
     print "Preparing domain socket"
     sink = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+    maxrecv = sink.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF) / 2
     try:
         os.remove(socketpath)
     except:
         pass
 
     sink.bind(socketpath)
-    return sink
+    return (sink, maxrecv)
 
 
 if __name__ == "__main__":
@@ -67,7 +68,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         run_plugin(sys.argv[1])
     else:
-        sink = initialize_socket()
+        sink, maxrecv = initialize_socket()
 
         # Prepare modules and plugins
         processes = {}
@@ -81,5 +82,5 @@ if __name__ == "__main__":
         signal.signal(signal.SIGTERM, signal_main)
 
         while True:
-            data, address = sink.recvfrom(4096) # hmm
+            data, address = sink.recvfrom(maxrecv)
             print >>sys.stderr, data
