@@ -3,6 +3,7 @@
     "socketpath": "/tmp/collector",
     "plugins": {
         "dummy1": { "plugin": "Dummy", "message": "Hai, dummy1" },
-        "dummy2": { "plugin": "Dummy", "message": "Boo, dummy2" }
+        "dummy2": { "plugin": "Dummy", "message": "Boo, dummy2" },
+        "syslog": { "plugin": "Socket", "listen": true, "type": "DGRAM", "path": "/tmp/logs" }
     }
 }
