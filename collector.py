@@ -80,6 +80,7 @@ if __name__ == "__main__":
         # Prepare modules and plugins
         processes = {}
         #TODO see if stuff gets lost when starting takes a while
+        # and whether FIFOs, Message Queues or semaphores are better
         for name in conf["plugins"].keys():
             print "Starting collector for plugin {0}".format(name)
             processes[name] = subprocess.Popen([sys.executable, sys.argv[0], name])
